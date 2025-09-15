@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>{{ jewelry.name }}</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ jewelry.image_url }}" class="img-fluid" alt="{{ jewelry.name }}">
+        </div>
+        <div class="col-md-6">
+            <p>{{ jewelry.description }}</p>
+            <p><strong>Price:</strong> ${{ jewelry.price }}</p>
+            <p><strong>Collection:</strong> {{ jewelry.collection }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

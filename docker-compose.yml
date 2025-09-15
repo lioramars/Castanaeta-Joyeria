@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - SECRET_KEY=your_secret_key
+      - DATABASE_URL=sqlite:///site.db
+      - EMAIL_USER=your_email@example.com
+      - EMAIL_PASS=your_email_password
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=castanaeta_joyeria
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

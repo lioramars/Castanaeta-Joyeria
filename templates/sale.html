@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Sale Items</h2>
+    <p>Check out our special offers on selected jewelry items.</p>
+    <div class="row">
+        {% for jewelry in sale_items %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ jewelry.image_url }}" class="card-img-top" alt="{{ jewelry.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ jewelry.name }}</h5>
+                    <p class="card-text">{{ jewelry.description }}</p>
+                    <p><strong>Discounted Price:</strong> ${{ jewelry.discounted_price }}</p>
+                    <a href="{{ url_for('jewelry_detail', id=jewelry.id) }}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
