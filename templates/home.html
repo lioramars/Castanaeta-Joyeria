@@ -1,7 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-    <h1>Welcome to Castanaeta Joyería</h1>
-    <p>Discover our exclusive collection of fine jewelry.</p>
-</div>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Shine Bright<br>With Castanaeta.</h1>
+        <p class="hero-subtitle">Luxury handcrafted jewelry made to elevate your elegance.</p>
+        <a href="/collection" class="hero-button">Shop Now</a>
+    </div>
+
+    <div class="hero-image"></div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+    <div class="feature-item">
+        <img src="{{ url_for('static', filename='img/icons/necklace.png') }}">
+        <h3>Genuine Stones</h3>
+        <p>High-quality natural gemstones selected with care.</p>
+    </div>
+
+    <div class="feature-item">
+        <img src="{{ url_for('static', filename='img/icons/ring.png') }}">
+        <h3>18K Gold Plated</h3>
+        <p>Durable, luxurious gold-plated finishes.</p>
+    </div>
+
+    <div class="feature-item">
+        <img src="{{ url_for('static', filename='img/icons/earrings.png') }}">
+        <h3>Designer Crafted</h3>
+        <p>Exclusive designs made for modern elegance.</p>
+    </div>
+</section>
+
 {% endblock %}

@@ -1,0 +1,170 @@
+[
+    {
+        "id": 1,
+        "name": "Gold Necklace Set",
+        "image": "gold_necklace_set.jpg",
+        "category": "necklaces",
+        "price": 299,
+        "description": "Beautiful handcrafted gold necklace set."
+    },
+    {
+        "id": 2,
+        "name": "Gold Necklace",
+        "image": "gold_necklace.jpg",
+        "category": "necklaces",
+        "price": 199,
+        "description": "Stylish gold necklace with a modern look."
+    },
+    {
+        "id": 3,
+        "name": "Gold Necklace Style 2",
+        "image": "gold_necklace2.jpg",
+        "category": "necklaces",
+        "price": 189,
+        "description": "Elegant gold necklace style."
+    },
+    {
+        "id": 4,
+        "name": "Gold Necklace with Pearls",
+        "image": "gold_with_pearles.jpg",
+        "category": "necklaces",
+        "price": 179,
+        "description": "Gold necklace featuring beautiful pearls."
+    },
+    {
+        "id": 5,
+        "name": "Pearl With Gold Necklace",
+        "image": "pearl_with_gold.jpg",
+        "category": "necklaces",
+        "price": 169,
+        "description": "Classic pearl necklace with gold."
+    },
+    {
+        "id": 6,
+        "name": "Pearl With Gold Necklace 2",
+        "image": "pearl_with_gold2.jpg",
+        "category": "necklaces",
+        "price": 169,
+        "description": "Unique pearl and gold design."
+    },
+    {
+        "id": 7,
+        "name": "Pearl Outdoor Necklace",
+        "image": "pearl_outdoor.jpg",
+        "category": "necklaces",
+        "price": 149,
+        "description": "Lifestyle pearl necklace outdoor photo."
+    },
+    {
+        "id": 8,
+        "name": "Necklace Model Photo",
+        "image": "necklace_model.jpg",
+        "category": "necklaces",
+        "price": 219,
+        "description": "Model photo of a luxury necklace."
+    },
+    {
+        "id": 9,
+        "name": "Full Jewelry Set",
+        "image": "full_set.jpg",
+        "category": "misc",
+        "price": 349,
+        "description": "Complete jewelry set including multiple items."
+    },
+    {
+        "id": 10,
+        "name": "Triple Pearle Necklace",
+        "image": "triple_pearle_necklace.jpg",
+        "category": "necklaces",
+        "price": 229,
+        "description": "Elegant triple-pearl necklace."
+    },
+    {
+        "id": 11,
+        "name": "Gold Rings",
+        "image": "gold_rings.jpg",
+        "category": "rings",
+        "price": 149,
+        "description": "Set of gold rings."
+    },
+    {
+        "id": 12,
+        "name": "Gold Rings Style 2",
+        "image": "gold_rings2.jpg",
+        "category": "rings",
+        "price": 159,
+        "description": "Premium gold rings second design."
+    },
+    {
+        "id": 13,
+        "name": "Diamond Earrings",
+        "image": "diamond_earrings.jpg",
+        "category": "earrings",
+        "price": 189,
+        "description": "Elegant handcrafted earrings featuring gold details."
+    },
+    {
+        "id": 14,
+        "name": "Triple Earrings",
+        "image": "triple_earrings.jpg",
+        "category": "earrings",
+        "price": 129,
+        "description": "Modern triple-style earrings."
+    },
+    {
+        "id": 15,
+        "name": "Earrings Model Photo",
+        "image": "earrings_modle.jpg",
+        "category": "earrings",
+        "price": 179,
+        "description": "Lifestyle photography of luxury earrings."
+    },
+    {
+        "id": 16,
+        "name": "Gold Earrings",
+        "image": "gold_earrings.jpg",
+        "category": "earrings",
+        "price": 149,
+        "description": "Classic handcrafted gold earrings."
+    },
+    {
+        "id": 17,
+        "name": "Gold Bracelet",
+        "image": "gold_bracelet.jpg",
+        "category": "bracelets",
+        "price": 199,
+        "description": "Luxury gold bracelet perfect for any occasion."
+    },
+    {
+        "id": 18,
+        "name": "Man Bracelet",
+        "image": "man_bracelet.jpg",
+        "category": "bracelets",
+        "price": 159,
+        "description": "Bold bracelet designed for men."
+    },
+    {
+        "id": 19,
+        "name": "Bag Sample",
+        "image": "bag_sample.jpg",
+        "category": "misc",
+        "price": 49,
+        "description": "Elegant luxury gift bag."
+    },
+    {
+        "id": 20,
+        "name": "Valentine Gift Set",
+        "image": "valentine_gift_set.jpg",
+        "category": "misc",
+        "price": 129,
+        "description": "Romantic themed jewelry gift set."
+    },
+    {
+        "id": 21,
+        "name": "Sample Jewelry Box",
+        "image": "sample_box.jpg",
+        "category": "misc",
+        "price": 39,
+        "description": "Premium jewelry display box."
+    }
+]

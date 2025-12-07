@@ -1,23 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-    <h2>Jewelry Collection</h2>
-    <!-- Display a list of jewelry items -->
-    <div class="row">
-        {% for jewelry in jewelry_list %}
-        <div class="col-md-4">
-            <div class="card">
-                <img src="{{ jewelry.image_url }}" class="card-img-top" alt="{{ jewelry.name }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ jewelry.name }}</h5>
-                    <p class="card-text">{{ jewelry.description }}</p>
-                    <p><strong>Price:</strong> ${{ jewelry.price }}</p>
-                    <p><strong>Collection:</strong> {{ jewelry.collection }}</p>
-                    <a href="{{ url_for('jewelry_detail', id=jewelry.id) }}" class="btn btn-primary">View Details</a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+
+<section class="collection-header">
+    <h1>{{ category|capitalize if category else "All Jewelry" }}</h1>
+</section>
+
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='img/' + product.image) }}" alt="{{ product.name }}">
+        <h3>{{ product.name }}</h3>
+        <p class="price">${{ product.price }}</p>
+
+        <a href="/product/{{ product.id }}" class="view-button">View Details</a>
     </div>
+    {% endfor %}
 </div>
+
 {% endblock %}
