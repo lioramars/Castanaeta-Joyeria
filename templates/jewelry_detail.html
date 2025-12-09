@@ -1,19 +1,34 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="product-container">
-    <img src="{{ '/' + product.image }}" class="detail-img">
+<div class="detail-wrapper">
 
-    <div class="detail-info">
-        <h2>{{ product.name }}</h2>
-        <p class="price">{{ product.price }} ₪</p>
-        <p>{{ product.description }}</p>
+    <!-- PRODUCT IMAGE -->
+    <div class="detail-image-box">
+        <img src="{{ url_for('static', filename='img/' + product.image) }}"
+             class="detail-image"
+             alt="{{ product.name }}">
+    </div>
 
-        <a class="contact-btn"
-           href="https://wa.me/972000000000?text=Hello,%20I'm%20interested%20in%20{{ product.name }}">
-           Contact to Order
+    <!-- PRODUCT INFO -->
+    <div class="detail-info-box">
+        <h1 class="detail-title">{{ product.name }}</h1>
+
+        <p class="detail-price">{{ product.price }} ₪</p>
+
+        <p class="detail-desc">{{ product.description }}</p>
+
+        <!-- ADD TO CART BUTTON -->
+        <button class="add-cart-btn">Add to Cart</button>
+
+        <!-- WHATSAPP BUTTON -->
+        <a class="whatsapp-order-btn"
+           href="https://wa.me/972546152494?text=Hello,%20I'm%20interested%20in%20{{ product.name }}"
+           target="_blank">
+            Order on WhatsApp
         </a>
     </div>
+
 </div>
 
 {% endblock %}

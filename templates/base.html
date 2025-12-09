@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Castanaeta Joyería</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+
     <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
@@ -51,6 +54,30 @@
     <footer class="footer">
         <p>© {{ current_year }} Castanaeta Joyería - All Rights Reserved</p>
     </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/972546152494?text=Hello%2C%20I%20am%20interested%20in%20your%20jewelry"
+       class="whatsapp-float" target="_blank">
+        <img src="{{ url_for('static', filename='img/whatsapp.png') }}" alt="WhatsApp Chat">
+    </a>
+
+    <!-- JS (optional — needed for Add to Cart button animation) -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.querySelector(".add-cart-btn");
+
+        if (btn) {
+            btn.addEventListener("click", function () {
+                btn.classList.add("clicked");
+                btn.innerHTML = "Added!";
+                setTimeout(() => {
+                    btn.classList.remove("clicked");
+                    btn.innerHTML = "Add to Cart";
+                }, 1200);
+            });
+        }
+    });
+    </script>
 
 </body>
 </html>

@@ -207,3 +207,104 @@ body {
 .view-button:hover {
     background: #a3844f;
 }
+/* Floating WhatsApp Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    z-index: 9999;
+}
+
+.whatsapp-float img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.whatsapp-float img:hover {
+    transform: scale(1.12);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+}
+/* PRODUCT DETAIL PAGE */
+
+.detail-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 60px;
+    padding: 60px 10%;
+}
+
+.detail-image-box {
+    flex: 1;
+    max-width: 500px;
+}
+
+.detail-image {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.detail-info-box {
+    flex: 1;
+    max-width: 450px;
+}
+
+.detail-title {
+    font-size: 34px;
+    font-weight: bold;
+    color: #3a2d1a;
+    margin-bottom: 10px;
+}
+
+.detail-price {
+    font-size: 26px;
+    color: #b79b65;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.detail-desc {
+    font-size: 16px;
+    color: #6b5a49;
+    margin-bottom: 30px;
+}
+
+/* ADD TO CART BUTTON */
+.add-cart-btn {
+    width: 100%;
+    padding: 15px;
+    background: #b79b65;
+    border: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+
+.add-cart-btn:hover {
+    background: #a3844f;
+}
+
+/* WHATSAPP BUTTON */
+.whatsapp-order-btn {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 15px;
+    background: #25D366;
+    color: white;
+    font-size: 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.whatsapp-order-btn:hover {
+    background: #1ebe57;
+}
