@@ -28,5 +28,5 @@ jobs:
           context: .
           push: true
           tags: |
-            <dLior98>/Castanaeta-Joyeria:latest
-            <Lior98>/Castanaeta-Joyeria:${{ github.sha }}
+            lior98/castanaeta-joyeria:latest
+            lior98/castanaeta-joyeria:${{ github.sha }}
