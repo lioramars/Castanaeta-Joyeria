@@ -1,31 +1,32 @@
-name: CI/CD Pipeline
+name: CI - Build & Push Docker Image
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  build:
+  docker:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    - name: Run tests
-      run: |
-        python -m unittest discover -s tests
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        tags: your_dockerhub_username/castanaeta-joyeria:latest
+      # ⬇️ משיכת הקוד
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ⬇️ התחברות ל-Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # ⬇️ Build + Push
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            <dLior98>/Castanaeta-Joyeria:latest
+            <Lior98>/Castanaeta-Joyeria:${{ github.sha }}

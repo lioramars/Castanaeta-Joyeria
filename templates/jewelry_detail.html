@@ -5,7 +5,7 @@
 
     <!-- PRODUCT IMAGE -->
     <div class="detail-image-box">
-        <img src="{{ url_for('static', filename='img/' + product.image) }}"
+        <img src="{{ url_for('static', filename=product.image) }}"
              class="detail-image"
              alt="{{ product.name }}">
     </div>
@@ -19,7 +19,9 @@
         <p class="detail-desc">{{ product.description }}</p>
 
         <!-- ADD TO CART BUTTON -->
-        <button class="add-cart-btn">Add to Cart</button>
+        <a href="/add-to-cart/{{ product.id }}" class="add-cart-btn">
+            Add to Cart
+        </a>
 
         <!-- WHATSAPP BUTTON -->
         <a class="whatsapp-order-btn"

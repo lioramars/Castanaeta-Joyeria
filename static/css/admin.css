@@ -1,0 +1,156 @@
+/* Admin pages - centered layout */
+.admin-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f6f2;
+    padding: 40px 16px;
+    font-family: Arial, sans-serif;
+}
+
+.admin-card {
+    width: 100%;
+    max-width: 920px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+    padding: 28px;
+}
+
+.admin-title {
+    margin: 0 0 18px;
+    color: #3a2d1a;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.admin-subtitle {
+    margin: -10px 0 18px;
+    color: #7a6a57;
+    font-size: 14px;
+}
+
+.admin-error {
+    background: #fff0f0;
+    border: 1px solid #ffd0d0;
+    color: #b00020;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    font-size: 14px;
+}
+
+/* Forms */
+.admin-form {
+    display: grid;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.admin-form label {
+    font-size: 13px;
+    color: #5c4632;
+    margin-bottom: -6px;
+}
+
+.admin-input, .admin-textarea, .admin-select {
+    width: 100%;
+    padding: 12px 12px;
+    border: 1px solid #e7dccb;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    background: #fff;
+}
+
+.admin-textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.btn {
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    transition: 0.2s ease;
+}
+
+.btn-primary {
+    background: #b79b65;
+    color: #fff;
+}
+.btn-primary:hover { background: #a3844f; }
+
+.btn-outline {
+    background: transparent;
+    color: #b79b65;
+    border: 1px solid #b79b65;
+}
+.btn-outline:hover {
+    background: #b79b65;
+    color: #fff;
+}
+
+.btn-danger {
+    background: #d64545;
+    color: #fff;
+}
+.btn-danger:hover { background: #b93a3a; }
+
+/* Table */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+.admin-table th, .admin-table td {
+    padding: 12px 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.admin-table thead th {
+    background: #fff7ef;
+    color: #3a2d1a;
+    font-weight: 700;
+    border-bottom: 1px solid #eee;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.admin-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.admin-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.small-muted {
+    color: #7a6a57;
+    font-size: 13px;
+}

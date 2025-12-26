@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+
+<div class="admin-page">
+    <div class="admin-card" style="max-width: 420px;">
+
+        <h1 class="admin-title">Admin Login</h1>
+        <p class="admin-subtitle">Castanaeta Joyería – Admin Access</p>
+
+        {% if error %}
+            <div class="admin-error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" class="admin-form">
+
+            <label>Username</label>
+            <input class="admin-input"
+                   type="text"
+                   name="username"
+                   placeholder="admin"
+                   required>
+
+            <label>Password</label>
+            <input class="admin-input"
+                   type="password"
+                   name="password"
+                   placeholder="••••••••"
+                   required>
+
+            <div class="admin-actions">
+                <button class="btn btn-primary" type="submit">
+                    Login
+                </button>
+                <a href="/" class="btn btn-outline">
+                    Back to site
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,10 +1,17 @@
 import os
 
 class Config:
-    SECRET_KEY = os.getenv('SECRET_KEY', 'your_secret_key')
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///site.db')
-    MAIL_SERVER = 'smtp.gmail.com'
-    MAIL_PORT = 587
-    MAIL_USE_TLS = True
-    MAIL_USERNAME = os.getenv('EMAIL_USER')
-    MAIL_PASSWORD = os.getenv('EMAIL_PASS')
+    # Flask
+    SECRET_KEY = os.getenv("FLASK_SECRET_KEY")
+
+    # Admin
+    ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
+    ADMIN_PASSWORD_HASH = os.getenv("ADMIN_PASSWORD_HASH")
+
+    # Uploads
+    UPLOAD_FOLDER = "static/img/uploads"
+
+    # PayPal
+    PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID")
+    PAYPAL_SECRET = os.getenv("PAYPAL_SECRET")
+    PAYPAL_MODE = os.getenv("PAYPAL_MODE", "sandbox")

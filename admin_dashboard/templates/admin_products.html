@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Products</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+
+<div class="admin-page">
+    <div class="admin-card">
+
+        <div class="admin-topbar">
+            <div>
+                <h1 class="admin-title">Products Dashboard</h1>
+                <p class="admin-subtitle">Add / edit jewelry</p>
+            </div>
+            <div class="admin-actions">
+                <a href="/" class="btn btn-outline">View Site</a>
+                <a href="{{ url_for('admin.logout') }}" class="btn btn-danger">Logout</a>
+            </div>
+        </div>
+
+        <h2>Add New Jewelry</h2>
+
+        <form method="POST"
+              action="{{ url_for('admin.add_product') }}"
+              enctype="multipart/form-data"
+              class="admin-form">
+
+            <input class="admin-input"
+                   name="name"
+                   placeholder="Name"
+                   required>
+
+            <textarea class="admin-textarea"
+                      name="description"
+                      placeholder="Description"
+                      required></textarea>
+
+            <input class="admin-input"
+                   type="number"
+                   name="price"
+                   placeholder="Price"
+                   required>
+
+            <select class="admin-select"
+                    name="category"
+                    required>
+                <option value="rings">Rings</option>
+                <option value="necklaces">Necklaces</option>
+                <option value="earrings">Earrings</option>
+                <option value="bracelets">Bracelets</option>
+            </select>
+
+            <input class="admin-input"
+                   type="file"
+                   name="image"
+                   accept="image/*"
+                   required>
+
+            <button type="submit" class="btn btn-primary">
+                Add Product
+            </button>
+        </form>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in products %}
+                <tr>
+                    <td>{{ p.id }}</td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.category }}</td>
+                    <td>{{ p.price }} ₪</td>
+                    <td class="small-muted">{{ p.image }}</td>
+                    <td>
+                        <a href="{{ url_for('admin.delete_product', product_id=p.id) }}"
+                           class="btn btn-danger"
+                           onclick="return confirm('Delete product?')">
+                           Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>
