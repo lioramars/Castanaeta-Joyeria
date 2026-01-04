@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Order Confirmed</title>
+  <style>
+    table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+  </style>
+</head>
+<body>
+  <h1>Thank you — your order is confirmed!</h1>
+  <p>Order ID: <strong>{{ order.id }}</strong></p>
+
+  <h2>Customer</h2>
+  <p>
+    {{ order.customer.name }}<br>
+    {{ order.customer.email }}<br>
+    {{ order.customer.address|nl2br }}
+  </p>
+
+  <h2>Order Summary</h2>
+  {% if order.items %}
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th><th>Price</th><th>Qty</th><th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for it in order.items %}
+      <tr>
+        <td>{{ it.name }}</td>
+        <td>${{ '%.2f'|format(it.price) }}</td>
+        <td>{{ it.quantity }}</td>
+        <td>${{ '%.2f'|format(it.subtotal) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="3" style="text-align:right">Total</th>
+        <th>${{ '%.2f'|format(order.total) }}</th>
+      </tr>
+    </tfoot>
+  </table>
+  {% else %}
+    <p>No items in this order.</p>
+  {% endif %}
+
+  <p><a href="{{ url_for('index') }}">Continue shopping</a></p>
+</body>
+</html>

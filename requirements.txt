@@ -1,3 +1,4 @@
 Flask
 python-dotenv
 paypal-checkout-serversdk
+Flask-Mail

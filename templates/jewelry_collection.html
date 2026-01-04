@@ -15,9 +15,22 @@
         <h3>{{ product.name }}</h3>
         <p class="price">{{ product.price }} ₪</p>
 
-        <a href="/product/{{ product.id }}" class="view-button">
-            View Details
-        </a>
+        <div class="product-actions">
+            <!-- View product page -->
+            <a href="{{ url_for('product_detail', product_id=product.id) }}"
+               class="view-button">
+                View Details
+            </a>
+
+            <!-- Add to cart -->
+            <a href="{{ url_for('add_to_cart', product_id=product.id) }}"
+               class="add-cart-btn small">
+               Add to Cart
+                <span class="cart-icon">🛒</span>
+                
+            </a>
+        </div>
+
     </div>
     {% endfor %}
 </div>

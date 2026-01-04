@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="checkout-page">
+  <div class="checkout-card">
+    <div class="checkout-left">
+
+      <h1 class="page-title">Checkout</h1>
+
+      <h2 class="section-title">Order Summary</h2>
+
+      <ul class="checkout-summary">
+        {% for item in cart_items %}
+        <li class="checkout-item">
+          <img
+            src="{{ url_for('static', filename=item.product.image) }}"
+            alt="{{ item.product.name }}"
+            class="checkout-item-img"
+          >
+          <div class="checkout-item-info">
+            <span class="checkout-item-name">
+              {{ item.product.name }} × {{ item.qty }}
+            </span>
+            <span class="checkout-item-price">
+              {{ item.subtotal }} ₪
+            </span>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <p class="checkout-total">
+        Total: <strong>{{ total }} ₪</strong>
+      </p>
+
+      <!-- CUSTOMER DETAILS -->
+      <form id="checkout-form" class="checkout-form" onsubmit="return false;">
+
+        <!-- Name + Email -->
+        <div class="form-row two">
+          <input id="name" name="name" type="text" placeholder="Full Name" autocomplete="name" required>
+          <input id="email" name="email" type="email" placeholder="Email" autocomplete="email" required>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-row one">
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            placeholder="Phone Number"
+            autocomplete="tel"
+            inputmode="tel"
+            pattern="[0-9+\- ]{8,15}"
+            required
+          >
+        </div>
+
+        <!-- City + Street -->
+        <div class="form-row two">
+          <input id="city" name="city" placeholder="City" autocomplete="address-level2" required>
+          <input id="street" name="street" placeholder="Street" autocomplete="address-line1" required>
+        </div>
+
+        <!-- House / Apartment / Postcode -->
+        <div class="form-row three">
+          <input id="house" name="house" placeholder="House No." required>
+          <input id="apartment" name="apartment" placeholder="Apartment (optional)">
+          <input id="postcode" name="postcode" placeholder="Post Code" inputmode="numeric">
+        </div>
+
+        <p id="form-error" class="form-error">
+          Please fill in all required fields before paying.
+        </p>
+
+      </form>
+
+      <!-- PAYPAL BUTTON -->
+      <div id="paypal-button-container"></div>
+
+      <a href="{{ url_for('cart') }}" class="back-to-cart">
+        ← Back to Cart
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- PAYPAL SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=ILS"></script>
+
+<script>
+  function v(id) {
+    return (document.getElementById(id)?.value || "").trim();
+  }
+
+  function getCustomerDetails() {
+    return {
+      name: v("name"),
+      email: v("email"),
+      phone: v("phone"),
+      city: v("city"),
+      street: v("street"),
+      house: v("house"),
+      apartment: v("apartment"),
+      postcode: v("postcode")
+    };
+  }
+
+  function showError(show) {
+    document.getElementById("form-error").style.display = show ? "block" : "none";
+  }
+
+  paypal.Buttons({
+    createOrder: function () {
+      const c = getCustomerDetails();
+      const required = ["name","email","phone","city","street","house"];
+      if (required.some(k => !c[k])) {
+        showError(true);
+        return Promise.reject();
+      }
+
+      showError(false);
+
+      return fetch("/paypal/create-order", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(c)
+      })
+      .then(r => r.json())
+      .then(d => d.id);
+    },
+
+    onApprove: function (data) {
+      return fetch(`/paypal/capture-order/${data.orderID}`, {method: "POST"})
+        .then(() => window.location.href = "/checkout-success");
+    }
+  }).render("#paypal-button-container");
+</script>
+
+{% endblock %}

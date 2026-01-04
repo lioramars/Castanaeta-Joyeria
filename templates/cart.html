@@ -5,21 +5,55 @@
 
 {% if cart_items %}
 <div class="product-grid">
-    {% for item in cart_items %}
-    <div class="product-card">
-        <img src="{{ url_for('static', filename=item.product.image) }}">
 
-        <h3>{{ item.product.name }}</h3>
-        <p>Price: {{ item.product.price }} ₪</p>
-        <p>Qty: {{ item.qty }}</p>
-        <p><strong>Total: {{ item.subtotal }} ₪</strong></p>
+  {% for item in cart_items %}
+  <div class="product-card">
+
+    <img src="{{ url_for('static', filename=item.product.image) }}"
+         alt="{{ item.product.name }}">
+
+    <h3>{{ item.product.name }}</h3>
+    <p class="price">{{ item.product.price }} ₪</p>
+
+    <!-- Quantity controls -->
+    <div class="cart-qty">
+      <form method="post"
+            action="{{ url_for('update_cart', product_id=item.product.id) }}">
+        <button class="qty-btn" name="action" value="decrease">−</button>
+      </form>
+
+      <span class="qty-number">{{ item.qty }}</span>
+
+      <form method="post"
+            action="{{ url_for('update_cart', product_id=item.product.id) }}">
+        <button class="qty-btn" name="action" value="increase">+</button>
+      </form>
     </div>
-    {% endfor %}
+
+    <p><strong>Total: {{ item.subtotal }} ₪</strong></p>
+
+    <form method="post"
+          action="{{ url_for('remove_from_cart', product_id=item.product.id) }}"
+          class="remove-form">
+      <button type="submit" class="btn btn-secondary btn-sm">
+        Remove
+      </button>
+    </form>
+
+  </div>
+  {% endfor %}
+
 </div>
 
 <h2 style="text-align:center;margin:30px;">
-    Grand Total: {{ total }} ₪
+  Grand Total: {{ total }} ₪
 </h2>
+
+<div class="cart-actions">
+  <a class="btn btn-primary" href="{{ url_for('checkout') }}">
+    Proceed to Checkout
+  </a>
+</div>
 
 {% else %}
 <p style="text-align:center;">Your cart is empty.</p>

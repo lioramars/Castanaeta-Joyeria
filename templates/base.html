@@ -8,26 +8,24 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
 
-    <!-- CSS -->
+    <!-- GLOBAL CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- PAGE-SPECIFIC CSS (Checkout, Admin, etc.) -->
+    {% block extra_css %}{% endblock %}
 </head>
 
 <body>
 
     <!-- NAVBAR -->
     <nav class="navbar">
-
-        <!-- LEFT SIDE (Logo) -->
         <div class="nav-left">
             <a href="/">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" class="nav-logo" alt="Castanaeta Logo">
             </a>
         </div>
 
-        <!-- RIGHT SIDE (Menu + Auth) -->
         <div class="nav-right">
-
-            <!-- CATEGORY LINKS -->
             <a href="/">Home</a>
             <a href="/collection">Collection</a>
             <a href="/collection/rings">Rings</a>
@@ -36,22 +34,17 @@
             <a href="/collection/bracelets">Bracelets</a>
             <a href="/cart">Cart 🧺</a>
 
-            <!-- DIVIDER -->
             <span class="nav-divider"></span>
 
-            <!-- AUTH BUTTONS -->
             <a class="auth-link" href="{{ url_for('auth.login') }}">Login</a>
             <a class="auth-link" href="{{ url_for('auth.register') }}">Register</a>
-
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
     <main>
         {% block content %}{% endblock %}
     </main>
 
-    <!-- FOOTER -->
     <footer class="footer">
         <p>© {{ current_year }} Castanaeta Joyería - All Rights Reserved</p>
     </footer>
@@ -62,23 +55,11 @@
         <img src="{{ url_for('static', filename='img/whatsapp.png') }}" alt="WhatsApp Chat">
     </a>
 
-    <!-- JS (optional — needed for Add to Cart button animation) -->
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const btn = document.querySelector(".add-cart-btn");
 
-        if (btn) {
-            btn.addEventListener("click", function () {
-                btn.classList.add("clicked");
-                btn.innerHTML = "Added!";
-                setTimeout(() => {
-                    btn.classList.remove("clicked");
-                    btn.innerHTML = "Add to Cart";
-                }, 1200);
-            });
-        }
-    });
-    </script>
+    <!-- Floating Cart Button -->
+    <a href="{{ url_for('cart') }}" class="cart-float">
+    <img src="{{ url_for('static', filename='img/icons/cart.png') }}" alt="Cart">
+    </a>
 
 </body>
 </html>

@@ -308,3 +308,185 @@ body {
 .whatsapp-order-btn:hover {
     background: #1ebe57;
 }
+
+/* appended: shared button tokens and utility spacing to match checkout styles */
+.btn { /* keep lightweight fallback if already present */ display:inline-flex; align-items:center; justify-content:center; padding:8px 14px; border-radius:6px; font-weight:600; text-decoration:none; }
+.btn-primary { background:#111; color:#fff; border:1px solid #111; }
+.btn-secondary { background:transparent; color:#111; border:1px solid #ddd; }
+a.btn:hover, button.btn:hover { opacity:0.95; transform: translateY(-1px); transition: all .12s ease; }
+
+/* product action area spacing */
+.product-actions { display:flex; gap:10px; align-items:center; margin-top:14px; flex-wrap:wrap; }
+.product-price { font-size:20px; font-weight:700; color:#111; margin-right:12px; }
+
+/* make sure images and cards remain responsive */
+.responsive-img { max-width:100%; height:auto; display:block; }
+/* small modifier for compact inline buttons */
+.btn-sm { padding:6px 10px; font-size:14px; border-radius:6px; }
+
+/* CART PAGE FIXES */
+
+.remove-form {
+    margin-top: 10px;
+}
+
+.cart-actions {
+    text-align: center;
+    margin: 40px 0;
+}
+
+/* make cart cards slightly more compact */
+.product-card p {
+    margin: 6px 0;
+}
+
+/* =========================
+   CART – Quantity controls
+========================= */
+
+.cart-qty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 12px 0;
+}
+
+.qty-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid #d8c7ab;
+    background: #fff;
+    color: #3a2d1a;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.qty-btn:hover {
+    background: #f3efe7;
+}
+
+.qty-number {
+    min-width: 24px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+}
+/* Actions under product card */
+.product-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+/* Small add to cart button for collection */
+.add-cart-btn.small {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 8px;
+    background: #2ecc71;      /* green – primary action */
+    color: #ffffff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.add-cart-btn.small:hover {
+    background: #27ae60;
+}
+/* Add to cart button – collection cards */
+.add-cart-btn.small {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    margin: 12px auto 0;
+    padding: 10px 22px;
+    width: auto;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    background: #2ecc71;
+    color: #ffffff;
+    border-radius: 8px;
+    text-decoration: none;
+
+    transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.add-cart-btn.small:hover {
+    background: #27ae60;
+    transform: translateY(-1px);
+}
+
+/* Cart icon inside button */
+.add-cart-btn.small .cart-icon {
+    font-size: 15px;
+    line-height: 1;
+}
+.add-cart-btn.small {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;                 /* רווח בין טקסט לאייקון */
+    padding: 10px 18px;
+    font-size: 15px;
+    border-radius: 8px;
+    background: #2ecc71;      /* ירוק */
+    color: #fff;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+
+.add-cart-btn.small:hover {
+    background: #27ae60;
+}
+
+.cart-icon {
+    font-size: 16px;
+}
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 40px;
+    padding: 40px 10%;
+    justify-content: center; /* ⬅️ זה הסוד */
+}
+/* Floating Cart Button – perfectly centered */
+.cart-float {
+    position: fixed;
+    bottom: 22px;
+    right: 90px; /* ליד ה-WhatsApp */
+    width: 72px;          /* ⬅️ היה 60 */
+    height: 72px;         /* ⬅️ היה 60 */
+    background: #b79b65;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.28);
+    z-index: 9999;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cart-float img {
+    width: 34px;          /* ⬅️ היה 26 */
+    height: 34px;
+    object-fit: contain;
+}
+
+.cart-float:hover {
+    transform: scale(1.15);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.35);
+}

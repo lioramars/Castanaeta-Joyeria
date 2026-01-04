@@ -1,5 +1,43 @@
 {% extends "base.html" %}
 {% block content %}
-<h1 style="text-align:center;margin:40px;">Payment Successful 🎉</h1>
-<p style="text-align:center;">Thank you for your purchase.</p>
+
+<div class="checkout-page">
+  <div class="checkout-card">
+    <div class="checkout-left">
+
+      <h1 class="page-title">Thank you for your order 🎉</h1>
+
+      <p>
+        Your order <strong>#{{ order_id }}</strong> has been received.
+      </p>
+
+      <h2 class="section-title">Order Details</h2>
+
+      <ul class="checkout-summary">
+        {% for item in cart_items %}
+        <li class="checkout-item">
+          <span>{{ item.product.name }} × {{ item.qty }}</span>
+          <span>{{ item.subtotal }} ₪</span>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <p class="checkout-total">
+        Total Paid: {{ total }} ₪
+      </p>
+
+      <p>
+        We’ve sent a confirmation email to <strong>{{ customer.email }}</strong>
+      </p>
+
+      <div class="checkout-actions">
+        <a href="{{ url_for('collection') }}" class="btn-primary">
+          Continue Shopping
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 {% endblock %}
