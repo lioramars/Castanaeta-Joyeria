@@ -11,10 +11,12 @@ import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from markupsafe import Markup, escape
 
 # PayPal SDK
 from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment, LiveEnvironment
 from paypalcheckoutsdk.orders import OrdersCreateRequest, OrdersCaptureRequest
+
 
 # =====================================================
 # Environment
@@ -67,6 +69,7 @@ def get_product(product_id):
             return p
     return None
 
+
 # =====================================================
 # 🧺 Cart helpers
 # =====================================================
@@ -92,21 +95,43 @@ def build_cart_items():
 
     return items, total
 
+
 # =====================================================
 # Email helper
 # =====================================================
 
-def send_email(to, subject, html):
-    msg = MIMEMultipart()
-    msg["From"] = SMTP_USER
-    msg["To"] = to
+def send_email(to_email, subject, html_body, from_name="Castanaeta", from_email=None):
+    """Send a simple HTML email (uses SMTP env vars)."""
+    if not to_email:
+        return False
+    from_email = from_email or SMTP_USER
+    msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
-    msg.attach(MIMEText(html, "html"))
+    msg["From"] = f"{from_name} <{from_email}>"
+    msg["To"] = to_email
 
-    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as s:
-        s.starttls()
-        s.login(SMTP_USER, SMTP_PASSWORD)
-        s.send_message(msg)
+    part = MIMEText(html_body, "html", "utf-8")
+    msg.attach(part)
+
+    try:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as smtp:
+            smtp.starttls()
+            smtp.login(SMTP_USER, SMTP_PASSWORD)
+            smtp.sendmail(from_email, [to_email], msg.as_string())
+        return True
+    except Exception as e:
+        # optional: log exception
+        print("send_email error:", e)
+        return False
+
+# register nl2br jinja filter
+def nl2br(value):
+    if value is None:
+        return ''
+    # escape to avoid XSS, then replace newlines with <br>
+    return Markup('<br>').join(escape(value).splitlines())
+
+app.jinja_env.filters['nl2br'] = nl2br
 
 # =====================================================
 # Blueprints
@@ -114,6 +139,7 @@ def send_email(to, subject, html):
 
 app.register_blueprint(auth_bp, url_prefix="/auth")
 app.register_blueprint(admin_bp, url_prefix="/admin")
+
 
 # =====================================================
 # Pages
@@ -144,6 +170,7 @@ def product_detail(product_id):
         abort(404)
     return render_template("jewelry_detail.html", product=product)
 
+
 # =====================================================
 # 🧺 Cart routes
 # =====================================================
@@ -154,6 +181,7 @@ def add_to_cart(product_id):
     pid = str(product_id)
     cart[pid] = cart.get(pid, 0) + 1
     session["cart"] = cart
+    session.modified = True
     return redirect(request.referrer or url_for("cart"))
 
 
@@ -172,6 +200,7 @@ def update_cart(product_id):
                 cart.pop(pid)
 
     session["cart"] = cart
+    session.modified = True
     return redirect(url_for("cart"))
 
 
@@ -186,6 +215,7 @@ def remove_from_cart(product_id):
     cart = session.get("cart", {})
     cart.pop(str(product_id), None)
     session["cart"] = cart
+    session.modified = True
     return redirect(url_for("cart"))
 
 
@@ -193,6 +223,7 @@ def remove_from_cart(product_id):
 def clear_cart():
     session.pop("cart", None)
     return redirect(url_for("cart"))
+
 
 # =====================================================
 # Checkout page
@@ -211,17 +242,52 @@ def checkout():
         PAYPAL_CLIENT_ID=PAYPAL_CLIENT_ID
     )
 
+
 # =====================================================
 # PayPal API
 # =====================================================
 
+def _build_items_html(items):
+    return "".join(
+        f"<li>{i['product']['name']} × {i['qty']} — {i['subtotal']} ₪</li>"
+        for i in items
+    )
+
+
+def _build_shipping_html(shipping: dict):
+    street = shipping.get("street", "")
+    house = shipping.get("house", "")
+    apartment = shipping.get("apartment", "")
+    city = shipping.get("city", "")
+    postcode = shipping.get("postcode", "")
+    phone = shipping.get("phone", "")
+    name = shipping.get("name", "")
+    email = shipping.get("email", "")
+
+    apt_line = f"Apt {apartment}<br>" if apartment else ""
+
+    return f"""
+    <h3>Shipping Details</h3>
+    <p>
+      <strong>Name:</strong> {name}<br>
+      <strong>Email:</strong> {email}<br>
+      <strong>Phone:</strong> {phone}<br><br>
+      <strong>Address:</strong><br>
+      {street} {house}<br>
+      {apt_line}
+      {city} {postcode}
+    </p>
+    """
+
+
 @app.route("/paypal/create-order", methods=["POST"])
 def paypal_create_order():
     items, total = build_cart_items()
-    shipping = request.json or {}
+    shipping = request.get_json(silent=True) or {}
 
-    # Save shipping info in session
+    # Save shipping info in session (used in capture step)
     session["shipping"] = shipping
+    session.modified = True
 
     req = OrdersCreateRequest()
     req.prefer("return=representation")
@@ -241,61 +307,110 @@ def paypal_create_order():
 
 @app.route("/paypal/capture-order/<order_id>", methods=["POST"])
 def paypal_capture_order(order_id):
+    # 1) Capture in PayPal
     paypal_client.execute(OrdersCaptureRequest(order_id))
 
+    # 2) Build order details from session/cart
     items, total = build_cart_items()
-    shipping = session.get("shipping", {})
+    shipping = session.get("shipping", {}) or {}
     order_short_id = uuid4().hex[:8].upper()
 
-    # =========================
-    # Build email content
-    # =========================
-
-    address_html = f"""
-    <h3>Shipping Details</h3>
-    <p>
-      <strong>Name:</strong> {shipping.get('name')}<br>
-      <strong>Email:</strong> {shipping.get('email')}<br>
-      <strong>Phone:</strong> {shipping.get('phone')}<br><br>
-
-      <strong>Address:</strong><br>
-      {shipping.get('street')} {shipping.get('house')}<br>
-      {f"Apt {shipping.get('apartment')}<br>" if shipping.get('apartment') else ""}
-      {shipping.get('city')} {shipping.get('postcode','')}
-    </p>
-    """
-
-    items_html = "".join(
-        f"<li>{i['product']['name']} × {i['qty']}</li>"
+    # make a small serializable items list for the success page / session
+    serial_items = [
+        {"name": i["product"]["name"], "qty": i["qty"], "subtotal": i["subtotal"]}
         for i in items
-    )
+    ]
 
-    email_body = f"""
+    # build order object and store in session for the success page
+    order = {
+        "id": order_short_id,
+        "items": serial_items,
+        "total": total,
+        "customer": {
+            "name": shipping.get("name", ""),
+            "email": shipping.get("email", ""),
+            "phone": shipping.get("phone", ""),
+            "address": {
+                "street": shipping.get("street", ""),
+                "house": shipping.get("house", ""),
+                "apartment": shipping.get("apartment", ""),
+                "city": shipping.get("city", ""),
+                "postcode": shipping.get("postcode", "")
+            }
+        }
+    }
+
+    # store last order in session so /checkout-success can read it
+    session["last_order"] = order
+    session.modified = True
+
+    items_html = _build_items_html(items)
+    shipping_html = _build_shipping_html(shipping)
+
+    admin_body = f"""
     <h2>New Paid Order #{order_short_id}</h2>
-    {address_html}
+    {shipping_html}
     <h3>Items</h3>
     <ul>{items_html}</ul>
     <p><strong>Total:</strong> {total} ₪</p>
     """
 
-    send_email(
-        ADMIN_EMAIL,
-        f"New Paid Order #{order_short_id}",
-        email_body
-    )
+    # 3) Send email to ADMIN
+    if ADMIN_EMAIL:
+        send_email(ADMIN_EMAIL, f"New Paid Order #{order_short_id}", admin_body)
 
+    # 4) Send email to CUSTOMER
+    customer_email = shipping.get("email")
+    customer_name = shipping.get("name", "")
+
+    if customer_email:
+        customer_body = f"""
+        <h2>Thank you for your order 🎉</h2>
+        <p>Hi {customer_name},</p>
+        <p>Your order <strong>#{order_short_id}</strong> has been confirmed.</p>
+        {shipping_html}
+        <h3>Items</h3>
+        <ul>{items_html}</ul>
+        <p><strong>Total Paid:</strong> {total} ₪</p>
+        <p>We will contact you shortly.</p>
+        """
+        send_email(customer_email, "Your order is confirmed 🎁", customer_body)
+
+    # 5) Clear session cart/shipping but keep last_order
     session.pop("cart", None)
     session.pop("shipping", None)
 
     return jsonify({"status": "success"})
 
+
 # =====================================================
-# Success page
+# Success page (keep it simple / no variables needed)
 # =====================================================
 
 @app.route("/checkout-success")
 def checkout_success():
-    return render_template("checkout_success.html")
+    # read and remove last order from session (fallback safe object if missing)
+    order = session.pop("last_order", None)
+    if not order:
+        order = {
+            "id": "N/A",
+            "items": [],
+            "total": 0.0,
+            "customer": {"name": "", "email": "", "address": ""}
+        }
+
+    # convert address dict to a newline string for template (nl2br filter will render <br>)
+    addr = order["customer"].get("address")
+    if isinstance(addr, dict):
+        parts = []
+        for k in ("street", "house", "apartment", "city", "postcode"):
+            v = addr.get(k)
+            if v:
+                parts.append(str(v))
+        order["customer"]["address"] = "\n".join(parts)
+
+    return render_template("checkout_success.html", order=order)
+
 
 # =====================================================
 # Run

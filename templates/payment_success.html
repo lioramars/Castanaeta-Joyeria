@@ -7,27 +7,10 @@
 
       <h1 class="page-title">Thank you for your order 🎉</h1>
 
-      <p>
-        Your order <strong>#{{ order_id }}</strong> has been received.
-      </p>
-
-      <h2 class="section-title">Order Details</h2>
-
-      <ul class="checkout-summary">
-        {% for item in cart_items %}
-        <li class="checkout-item">
-          <span>{{ item.product.name }} × {{ item.qty }}</span>
-          <span>{{ item.subtotal }} ₪</span>
-        </li>
-        {% endfor %}
-      </ul>
-
-      <p class="checkout-total">
-        Total Paid: {{ total }} ₪
-      </p>
+      <p>Your payment was completed successfully.</p>
 
       <p>
-        We’ve sent a confirmation email to <strong>{{ customer.email }}</strong>
+        A confirmation email has been sent to your email address.
       </p>
 
       <div class="checkout-actions">
