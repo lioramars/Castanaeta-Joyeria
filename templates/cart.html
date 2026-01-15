@@ -1,49 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1 style="text-align:center;margin:40px 0;">Your Cart</h1>
+<div class="cart-page">
+  <h1 style="text-align:center;margin:40px 0 30px;">Your Cart</h1>
 
-{% if cart_items %}
-<div class="product-grid">
-
+  {% if cart_items %}
+  
+  <!-- Cart items list (horizontal layout) -->
   {% for item in cart_items %}
-  <div class="product-card">
-
+  <div class="cart-item">
+    <!-- Product image -->
     <img src="{{ url_for('static', filename=item.product.image) }}"
-         alt="{{ item.product.name }}">
+         alt="{{ item.product.name }}"
+         class="cart-item-image">
 
-    <h3>{{ item.product.name }}</h3>
-    <p class="price">{{ item.product.price }} ₪</p>
+    <!-- Product info: name only (price shown on right as subtotal) -->
+    <div class="cart-item-info">
+      <h3 class="cart-item-name">{{ item.product.name }}</h3>
+    </div>
 
-    <!-- Quantity controls -->
-    <div class="cart-qty">
-      <form method="post"
-            action="{{ url_for('update_cart', product_id=item.product.id) }}">
-        <button class="qty-btn" name="action" value="decrease">−</button>
-      </form>
-
-      <span class="qty-number">{{ item.qty }}</span>
-
-      <form method="post"
-            action="{{ url_for('update_cart', product_id=item.product.id) }}">
-        <button class="qty-btn" name="action" value="increase">+</button>
+    <!-- Quantity controls + Remove button -->
+    <div class="cart-controls">
+      <!-- Qty buttons: - qty + -->
+      <div class="cart-qty">
+        <form method="post" action="{{ url_for('update_cart', product_id=item.product.id) }}">
+          <button class="qty-btn" name="action" value="decrease">−</button>
+        </form>
+        <span class="qty-number">{{ item.qty }}</span>
+        <form method="post" action="{{ url_for('update_cart', product_id=item.product.id) }}">
+          <button class="qty-btn" name="action" value="increase">+</button>
+        </form>
+      </div>
+      
+      <!-- Remove button below qty controls -->
+      <form method="post" action="{{ url_for('remove_from_cart', product_id=item.product.id) }}" class="remove-form">
+        <button type="submit" class="remove-btn">Remove</button>
       </form>
     </div>
 
-    <p><strong>Total: {{ item.subtotal }} ₪</strong></p>
-
-    <form method="post"
-          action="{{ url_for('remove_from_cart', product_id=item.product.id) }}"
-          class="remove-form">
-      <button type="submit" class="btn btn-secondary btn-sm">
-        Remove
-      </button>
-    </form>
-
+    <!-- Subtotal -->
+    <div class="cart-item-actions">
+      <p class="cart-item-subtotal"><strong>{{ item.subtotal }} ₪</strong></p>
+    </div>
   </div>
   {% endfor %}
-
-</div>
 
 <h2 style="text-align:center;margin:30px;">
   Grand Total: {{ total }} ₪

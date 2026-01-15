@@ -411,6 +411,19 @@ def checkout_success():
 
     return render_template("checkout_success.html", order=order)
 
+# =====================================================
+# Cart Counter
+# =====================================================
+
+@app.context_processor
+def inject_cart_count():
+    cart = session.get("cart", {})
+    try:
+        count = sum(int(v) for v in cart.values())
+    except Exception:
+        count = 0
+    return {"cart_count": count}
+
 
 # =====================================================
 # Run

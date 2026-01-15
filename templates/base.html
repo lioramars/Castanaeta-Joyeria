@@ -5,19 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Castanaeta Joyería</title>
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
-
-    <!-- GLOBAL CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    <!-- PAGE-SPECIFIC CSS (Checkout, Admin, etc.) -->
     {% block extra_css %}{% endblock %}
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-left">
             <a href="/">
@@ -49,17 +44,22 @@
         <p>© {{ current_year }} Castanaeta Joyería - All Rights Reserved</p>
     </footer>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/972546152494?text=Hello%2C%20I%20am%20interested%20in%20your%20jewelry"
-       class="whatsapp-float" target="_blank">
-        <img src="{{ url_for('static', filename='img/whatsapp.png') }}" alt="WhatsApp Chat">
-    </a>
+    <!-- Floating buttons (same size, right side) -->
+    <div class="floating-buttons">
+        <a href="{{ url_for('cart') }}" class="fab fab-cart" aria-label="Cart">
+            <img src="{{ url_for('static', filename='img/icons/cart.png') }}" alt="Cart">
+            {% if cart_count and cart_count > 0 %}
+                <span class="cart-badge">{{ cart_count }}</span>
+            {% endif %}
+        </a>
 
-
-    <!-- Floating Cart Button -->
-    <a href="{{ url_for('cart') }}" class="cart-float">
-    <img src="{{ url_for('static', filename='img/icons/cart.png') }}" alt="Cart">
-    </a>
+        <a href="https://wa.me/972546152494?text=Hello%2C%20I%20am%20interested%20in%20your%20jewelry"
+           class="fab fab-whatsapp"
+           target="_blank"
+           aria-label="WhatsApp">
+            <img src="{{ url_for('static', filename='img/whatsapp.png') }}" alt="WhatsApp">
+        </a>
+    </div>
 
 </body>
 </html>
