@@ -3,7 +3,7 @@ from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment, LiveEnv
 
 def get_paypal_client():
     client_id = os.getenv("PAYPAL_CLIENT_ID")
-    client_secret = os.getenv("PAYPAL_CLIENT_SECRET")
+    client_secret = os.getenv("PAYPAL_SECRET")
     mode = os.getenv("PAYPAL_MODE", "sandbox")
 
     if mode == "live":
