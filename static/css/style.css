@@ -557,20 +557,10 @@ h1, h2, h3, h4 {
 
 .fab-cart {
     background: #b79b65;
-    position: fixed;
-    right: 20px;
-    bottom: 100px;
-    width: 56px;  /* CHANGED: same size as WhatsApp (56px, not 64px) */
-    height: 56px;
 }
 
 .fab-whatsapp {
-    background: #20BA60;  /* unified green */
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    width: 56px;
-    height: 56px;
+    background: #25D366;
 }
 
 /* Cart badge */

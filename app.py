@@ -2,6 +2,7 @@ from flask import (
     Flask, render_template, abort,
     session, redirect, url_for, request, jsonify
 )
+from datetime import datetime
 from auth.routes import auth_bp
 from admin_dashboard.routes import admin_bp
 from dotenv import load_dotenv
@@ -416,13 +417,13 @@ def checkout_success():
 # =====================================================
 
 @app.context_processor
-def inject_cart_count():
+def inject_globals():
     cart = session.get("cart", {})
     try:
         count = sum(int(v) for v in cart.values())
     except Exception:
         count = 0
-    return {"cart_count": count}
+    return {"cart_count": count, "current_year": datetime.now().year}
 
 
 # =====================================================
