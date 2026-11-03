@@ -302,14 +302,22 @@ def paypal_create_order():
         }]
     })
 
-    res = paypal_client.execute(req)
+    try:
+        res = paypal_client.execute(req)
+    except Exception as e:
+        print("PayPal create-order error:", e)
+        return jsonify({"error": str(e)}), 500
     return jsonify({"id": res.result.id})
 
 
 @app.route("/paypal/capture-order/<order_id>", methods=["POST"])
 def paypal_capture_order(order_id):
     # 1) Capture in PayPal
-    paypal_client.execute(OrdersCaptureRequest(order_id))
+    try:
+        paypal_client.execute(OrdersCaptureRequest(order_id))
+    except Exception as e:
+        print("PayPal capture error:", e)
+        return jsonify({"error": str(e)}), 500
 
     # 2) Build order details from session/cart
     items, total = build_cart_items()
