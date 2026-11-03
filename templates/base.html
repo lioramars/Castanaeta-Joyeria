@@ -6,6 +6,9 @@
     <title>Castanaeta Joyería</title>
 
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     {% block extra_css %}{% endblock %}
@@ -20,6 +23,14 @@
             </a>
         </div>
 
+        <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
+            <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="0" y1="1" x2="22" y2="1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <line x1="0" y1="9" x2="22" y2="9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <line x1="0" y1="17" x2="22" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+
         <div class="nav-right">
             <a href="/">Home</a>
             <a href="/collection">Collection</a>
@@ -27,7 +38,7 @@
             <a href="/collection/necklaces">Necklaces</a>
             <a href="/collection/earrings">Earrings</a>
             <a href="/collection/bracelets">Bracelets</a>
-            <a href="/cart">Cart 🧺</a>
+            <a href="/cart">Cart</a>
 
             <span class="nav-divider"></span>
 
@@ -60,6 +71,25 @@
             <img src="{{ url_for('static', filename='img/whatsapp.png') }}" alt="WhatsApp">
         </a>
     </div>
+
+
+    <script>
+        (function () {
+            var btn = document.getElementById('hamburger-btn');
+            var nav = document.querySelector('.nav-right');
+            if (!btn || !nav) return;
+            btn.addEventListener('click', function () {
+                var open = nav.classList.toggle('open');
+                btn.setAttribute('aria-expanded', open);
+            });
+            document.addEventListener('click', function (e) {
+                if (!e.target.closest('.navbar')) {
+                    nav.classList.remove('open');
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        })();
+    </script>
 
 </body>
 </html>

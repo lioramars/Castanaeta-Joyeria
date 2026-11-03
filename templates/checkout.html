@@ -43,35 +43,59 @@
 
         <!-- Name + Email -->
         <div class="form-row two">
-          <input id="name" name="name" type="text" placeholder="Full Name" autocomplete="name" required>
-          <input id="email" name="email" type="email" placeholder="Email" autocomplete="email" required>
+          <div class="form-field">
+            <label for="name">Full Name <span class="req">*</span></label>
+            <input id="name" name="name" type="text" placeholder="Full Name" autocomplete="name" required>
+          </div>
+          <div class="form-field">
+            <label for="email">Email <span class="req">*</span></label>
+            <input id="email" name="email" type="email" placeholder="Email" autocomplete="email" required>
+          </div>
         </div>
 
         <!-- Phone -->
         <div class="form-row one">
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            placeholder="Phone Number"
-            autocomplete="tel"
-            inputmode="tel"
-            pattern="[0-9+\- ]{8,15}"
-            required
-          >
+          <div class="form-field">
+            <label for="phone">Phone <span class="req">*</span></label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              placeholder="Phone Number"
+              autocomplete="tel"
+              inputmode="tel"
+              pattern="[0-9+\- ]{8,15}"
+              required
+            >
+          </div>
         </div>
 
         <!-- City + Street -->
         <div class="form-row two">
-          <input id="city" name="city" placeholder="City" autocomplete="address-level2" required>
-          <input id="street" name="street" placeholder="Street" autocomplete="address-line1" required>
+          <div class="form-field">
+            <label for="city">City <span class="req">*</span></label>
+            <input id="city" name="city" placeholder="City" autocomplete="address-level2" required>
+          </div>
+          <div class="form-field">
+            <label for="street">Street <span class="req">*</span></label>
+            <input id="street" name="street" placeholder="Street" autocomplete="address-line1" required>
+          </div>
         </div>
 
         <!-- House / Apartment / Postcode -->
         <div class="form-row three">
-          <input id="house" name="house" placeholder="House No." required>
-          <input id="apartment" name="apartment" placeholder="Apartment (optional)">
-          <input id="postcode" name="postcode" placeholder="Post Code" inputmode="numeric">
+          <div class="form-field">
+            <label for="house">House No. <span class="req">*</span></label>
+            <input id="house" name="house" placeholder="House No." required>
+          </div>
+          <div class="form-field">
+            <label for="apartment">Apartment</label>
+            <input id="apartment" name="apartment" placeholder="Apartment">
+          </div>
+          <div class="form-field">
+            <label for="postcode">Post Code</label>
+            <input id="postcode" name="postcode" placeholder="Post Code" inputmode="numeric">
+          </div>
         </div>
 
         <p id="form-error" class="form-error">
