@@ -30,6 +30,8 @@
     {% endwith %}
 
     <form method="POST" action="{{ url_for('auth.register') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
       <div class="form-field">
         <label for="name">Full Name <span class="req">*</span></label>
         <input id="name" name="name" type="text" autocomplete="name" required placeholder="Your name">
@@ -40,7 +42,7 @@
       </div>
       <div class="form-field" style="margin-top:16px;">
         <label for="password">Password <span class="req">*</span></label>
-        <input id="password" name="password" type="password" autocomplete="new-password" required placeholder="••••••••">
+        <input id="password" name="password" type="password" autocomplete="new-password" required placeholder="At least 8 characters" minlength="8">
       </div>
       <div class="auth-actions">
         <button type="submit" class="btn-primary">Create Account</button>

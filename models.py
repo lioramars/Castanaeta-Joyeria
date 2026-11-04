@@ -1,12 +1,15 @@
-from .app import db
+from flask_login import UserMixin
+from extensions import db
 
-class Jewelry(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    price = db.Column(db.Float, nullable=False)
-    collection = db.Column(db.String(100), nullable=False)
-    image_url = db.Column(db.String(200), nullable=False)
+
+class User(UserMixin, db.Model):
+    __tablename__ = "users"
+
+    id            = db.Column(db.Integer, primary_key=True)
+    name          = db.Column(db.String(100), nullable=False)
+    email         = db.Column(db.String(120), unique=True, nullable=False, index=True)
+    password_hash = db.Column(db.String(255), nullable=False)
+    created_at    = db.Column(db.DateTime, server_default=db.func.now())
 
     def __repr__(self):
-        return f'<Jewelry {self.name}>'
+        return f"<User {self.email}>"

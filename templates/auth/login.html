@@ -30,6 +30,11 @@
     {% endwith %}
 
     <form method="POST" action="{{ url_for('auth.login') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      {% if request.args.get('next') %}
+        <input type="hidden" name="next" value="{{ request.args.get('next') }}">
+      {% endif %}
+
       <div class="form-field">
         <label for="email">Email <span class="req">*</span></label>
         <input id="email" name="email" type="email" autocomplete="email" required placeholder="your@email.com">

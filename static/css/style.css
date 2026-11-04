@@ -97,6 +97,13 @@ h1, h2, h3, h4 {
     color: #b79b65;
 }
 
+.nav-username {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-2);
+    padding: 8px 4px;
+}
+
 .auth-link {
     padding: 8px 16px;
     border: 1.5px solid #b79b65;

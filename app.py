@@ -3,6 +3,8 @@ from flask import (
     session, redirect, url_for, request, jsonify
 )
 from datetime import datetime
+from extensions import db, login_manager, csrf
+from models import User
 from auth.routes import auth_bp
 from admin_dashboard.routes import admin_bp
 from dotenv import load_dotenv
@@ -41,6 +43,20 @@ PAYPAL_MODE = os.getenv("PAYPAL_MODE", "sandbox")  # sandbox | live
 
 app = Flask(__name__)
 app.config.from_object("config.Config")
+
+# Extensions
+db.init_app(app)
+login_manager.init_app(app)
+login_manager.login_view = "auth.login"
+login_manager.login_message = "Please sign in to continue."
+csrf.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+with app.app_context():
+    db.create_all()
 
 # =====================================================
 # PayPal client
@@ -187,6 +203,7 @@ def add_to_cart(product_id):
 
 
 @app.route("/update-cart/<int:product_id>", methods=["POST"])
+@csrf.exempt
 def update_cart(product_id):
     cart = session.get("cart", {})
     pid = str(product_id)
@@ -212,6 +229,7 @@ def cart():
 
 
 @app.route("/remove-from-cart/<int:product_id>", methods=["POST"])
+@csrf.exempt
 def remove_from_cart(product_id):
     cart = session.get("cart", {})
     cart.pop(str(product_id), None)
@@ -282,6 +300,7 @@ def _build_shipping_html(shipping: dict):
 
 
 @app.route("/paypal/create-order", methods=["POST"])
+@csrf.exempt
 def paypal_create_order():
     items, total = build_cart_items()
     shipping = request.get_json(silent=True) or {}
@@ -311,6 +330,7 @@ def paypal_create_order():
 
 
 @app.route("/paypal/capture-order/<order_id>", methods=["POST"])
+@csrf.exempt
 def paypal_capture_order(order_id):
     # 1) Capture in PayPal
     try:
